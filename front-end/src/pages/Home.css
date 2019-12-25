@@ -1,0 +1,57 @@
+.img-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    }
+    .img-list li {
+    border: 5px solid transparent;
+    box-sizing: border-box;
+    width: 33.33%;
+    float: left;
+    position: relative;
+    cursor: pointer;
+    }
+    .img-list img {
+    max-width: 100%;
+    vertical-align: middle;
+    }
+    
+    
+    /* The hover effect
+    -------------------------------------------------------------- */
+    .img-list li:before {
+    transition: all .5s ease;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+    transform: scale(0);
+    }
+    .img-list li:hover:before {
+    opacity: .50;
+    transform: scale(1);
+    }
+    .img-list li:after {
+    transition: all .6s ease .2s;
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    border: 1px solid #aaa;
+    background: #ffffff;
+    opacity: 0;
+    transform: scale(0);
+    }
+    .img-list li:hover:after {
+    opacity: .35;
+    transform: scale(1);
+    }
+
+    .picture {
+        width: '50pvh';
+        height: '50vh';
+    }

@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Asap+Condensed&display=swap');
+
+* {
+    font-family: 'Asap Condensed', sans-serif;
+}
+
+.style1 {
+    background: url(https://scontent.fbkk12-4.fna.fbcdn.net/v/t1.0-9/78364379_3451883711519414_672156244315734016_o.jpg?_nc_cat=110&_nc_ohc=VLRGThPqa38AQl-JeTQsE5RfzSER9akIET6mZyMD1xRfAVhs7uxQbGKhg&_nc_ht=scontent.fbkk12-4.fna&oh=48c88b2e6627b97556a599a3f1d525b5&oe=5E840475) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+
