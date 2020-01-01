@@ -4,7 +4,9 @@ const CheckboxGroup = Checkbox.Group;
 
 const plainOptions = ['Customer', 'Vendor', 'Admin'];
 const defaultCheckedList = ['Customer', 'Vendor'];
+
 export default class Register extends Component {
+    
     state = {
         checkedList: defaultCheckedList,
         indeterminate: true,
@@ -37,11 +39,11 @@ export default class Register extends Component {
                         </Col>
                         <Col>
                             Username:
-          <Input placeholder="Username" />
+          <Input placeholder="chutinunTan" />
                         </Col>
                         <Col>
                             Password:
-          <Input.Password placeholder="Password" />
+          <Input.Password placeholder="password" />
                         </Col>
                         <Col>
                             Confirm Password:
@@ -49,11 +51,11 @@ export default class Register extends Component {
                         </Col>
                         <Col>
                             FullName:
-          <Input placeholder="FullName" />
+          <Input placeholder="Daisy gonna" />
                         </Col>
                         <Col>
                             Birthday:
-          <Input placeholder="01/01/1995" />
+          <Input placeholder="01-01-1995" />
                         </Col><br />
                         <Col>
                             <Row>
@@ -63,8 +65,8 @@ export default class Register extends Component {
                                         onChange={this.onCheckAllChange}
                                         checked={this.state.checkAll}
                                     >
-                                        Check all
-          </Checkbox>
+                                    Check all
+                                    </Checkbox>
                                 </Col>
                                 <br />
                                 <Col>

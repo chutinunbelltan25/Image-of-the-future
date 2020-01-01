@@ -3,8 +3,43 @@ import { Menu, Icon, Col, Row, Form, Input } from 'antd'
 import { grey } from '@ant-design/colors'
 import { Button, Drawer } from 'antd'
 import logo from '../image/logo1.jpg'
+
+// const initialState = () => {
+//     const token = localStorage.getItem('ACCESS_TOKEN');
+//     if (token) {
+//         return jwtDecode(token)
+//     } else {
+//         return {
+//             role: "user"
+//         }
+//     }
+// }
 class Narbarmane extends Component {
     state = { visible: false, placement: 'left' };
+
+    // fetchLogin = token => {
+    //     localStorage.setItem(TOKEN, token)
+    // }
+
+    // login = (user,token) => {
+    //     fetchLogin(token)
+    //     return {
+    //         type: LOGIN_USER,
+    //         ...user
+    //     }
+    // }
+
+    // fetchLogout = token => {
+    //     localStorage.removeItem(TOKEN)
+    // }
+
+    // logout = (user,token) => {
+    //     this.fetchLogout(token)
+    //     return {
+    //         type: LOGOUT_USER,
+    //         ...user
+    //     }
+    // }
 
     showDrawer = () => {
         this.setState({

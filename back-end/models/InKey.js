@@ -1,19 +1,33 @@
 module.exports = (sequelize, DataType) => {
 
-    const Inkeys= sequelize.define('inkey', {
-        
-        in1_id: {
-            type: DataType.UUID,
-            defaultValue: DataType.UUIDV4,
-            allowNull: false,
-            primaryKey: true,
-            unique: true
-        },
+  const Inkeys = sequelize.define('inkey', {
+
+    in1_id: {
+      type: DataType.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      unique: true,
+      autoIncrement: true
     },
+  },
     {
-        
-        freezeTableName: true, 
-        timestamps: false, 
+
+      freezeTableName: true,
+      timestamps: false,
     })
-        return Inkeys
-    }
+  // Inkeys.associate = (models) => {
+  //   Inkeys.belongsTo(models.medias, {
+  //     foreignKey: {
+  //       name: 'media_id',
+  //       allowNull: false
+  //     }
+  //   })
+  //   Inkeys.belongsTo(models.keywords, {
+  //     foreignKey: {
+  //       name: 'keyword_id',
+  //       allowNull: false
+  //     }
+  //   })
+  // }
+  return Inkeys
+}

@@ -3,14 +3,14 @@ module.exports = (sequelize, DataType) => {
     const Users = sequelize.define('users', {
        
         user_id: {
-            type: DataType.UUID,
-            defaultValue: DataType.UUIDV4,
+            type: DataType.INTEGER,
             allowNull: false,
             primaryKey: true,
-            unique: true
+            unique: true,
+            autoIncrement: true
         },
         user_profile: {
-            type: DataType.STRING,
+            type: DataType.STRING(10000),
         },
         username: {
             type: DataType.STRING,
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataType) => {
             allowNull: false,
         },
         birth: {
-            type: DataType.INTEGER(10),
+            type: DataType.DATE,
         },
         role: {
             type: DataType.ENUM('admin','user')

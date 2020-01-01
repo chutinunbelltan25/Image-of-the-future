@@ -2,6 +2,8 @@ const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const userService = require('./services/user')
+const mediaService = require('./services/media')
+const keywordService = require('./services/keyword')
 const cors = require('cors')
 const db = require('./models');
 const passport = require('passport');
@@ -19,6 +21,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 require('./config/passport/passport')
 db.sequelize.sync({ alter: false }).then(() => {
     userService(app, db);
+    mediaService(app, db);
+    keywordService(app, db);
 
     app.get('/protected', passport.authenticate('jwt', { session: false }),
         function (req, res) {

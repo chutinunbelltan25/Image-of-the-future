@@ -93,9 +93,10 @@ passport.use(
   new JWTstrategy(opts, (jwt_payload, done) => {
     try {
       console.log("test")
+      console.log(jwt_payload)
       db.users.findOne({
         where: {
-          id: jwt_payload.id,
+          user_id: jwt_payload.id,
         },
       }).then(user => {
         if (user) {

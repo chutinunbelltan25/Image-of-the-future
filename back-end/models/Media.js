@@ -2,14 +2,14 @@ module.exports = (sequelize, DataType) => {
 
     const Medias = sequelize.define('medias', {
         media_id: {
-            type: DataType.UUID,
-            defaultValue: DataType.UUIDV4,
+            type: DataType.INTEGER,
             allowNull: false,
             primaryKey: true,
-            unique: true
+            unique: true,
+            autoIncrement: true
         },
         media_url: {
-            type: DataType.STRING,
+            type: DataType.STRING(10000),
             allowNull: false,
         },
         media_name: {
@@ -17,19 +17,19 @@ module.exports = (sequelize, DataType) => {
             allowNull: false,
         },
         text: {
-            type: DataType.STRING,
+            type: DataType.STRING(1000),
             allowNull: false,
         },
         status: {
-            type: DataType.STRING,
+            type: DataType.ENUM('Approve','in-progress','reject'),
             allowNull: false,
         },
-        resson: {
+        reason: {
             type: DataType.STRING,
             allowNull: false,
         },
         approve_date: {
-            type: DataType.STRING,
+            type: DataType.DATE,
             allowNull: true,
         },
         number_of_download: {

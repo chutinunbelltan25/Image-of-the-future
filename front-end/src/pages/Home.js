@@ -6,9 +6,20 @@ import pic1 from '../image/2.JPG'
 import pic2 from '../image/1.JPG'
 const { Option } = Select;
 export default class Home extends Component {
+    state = {
+        categorys: []
+    }
     handleChange = (value) => {
         console.log(`selected ${value}`);
     }
+
+    // rendercategory = () => {
+    //     const categorySelect = [];
+    //     this.state.categorys.filter(category => (
+    //         categorySelect.push(`<Option key={category.category_id}>{category.category_name}</Option>`)
+    //     )
+    //     }
+
     render() {
 
         return (
@@ -52,9 +63,7 @@ export default class Home extends Component {
                         <Col span={6} ><img src={pic1} alt="pic" style={{ width: '50vh' }} /></Col>
                         <Col span={6} ><img src={pic1} alt="pic" style={{ width: '50vh' }} /></Col>
                     </Row>
-                    {/* style={{width:'50vh', height:'1vh'}}><img className="picture" src={pic1} alt="pic"/> */}
-                    {/* <img className="picture" src={pic1} alt="pic"/>
-                    <img className="picture" src={pic1} alt="pic"/> */}
+
                 </Row>
             </Row>
 

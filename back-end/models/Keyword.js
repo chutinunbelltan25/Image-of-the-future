@@ -2,11 +2,11 @@ module.exports = (sequelize, DataType) => {
 
     const Keywords = sequelize.define('keywords', {
         keyword_id: {
-            type: DataType.UUID,
-            defaultValue: DataType.UUIDV4,
+            type: DataType.INTEGER,
             allowNull: false,
             primaryKey: true,
-            unique: true
+            unique: true,
+            autoIncrement: true
         },
         keyword_name: {
             type: DataType.STRING,

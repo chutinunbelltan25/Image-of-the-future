@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const config = require('../config/passport/passport');
 const bcrypt = require('bcryptjs');
+const moment = require('moment')
 
 module.exports = (app, db) => {
     app.post('/register_user', (req, res, next) => {
@@ -19,7 +20,7 @@ module.exports = (app, db) => {
                     username: user.username,
                     full_name: req.body.full_name,
                     birth: req.body.birth,
-                    role: "user"
+                    role: req.body.role
                 })
                 db.users.findOne({
                     where: { username: data.username }
@@ -61,7 +62,7 @@ module.exports = (app, db) => {
                 username: req.body.username,
               },
             }).then(user => {
-              const token = jwt.sign({ id: user.id, role: user.role }, config.jwtOptions.secretOrKey, {
+              const token = jwt.sign({ id: user.user_id, role: user.role }, config.jwtOptions.secretOrKey, {
                 expiresIn: 7200,
               });
               res.status(200).send({
