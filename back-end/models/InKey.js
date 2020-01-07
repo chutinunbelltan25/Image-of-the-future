@@ -15,19 +15,5 @@ module.exports = (sequelize, DataType) => {
       freezeTableName: true,
       timestamps: false,
     })
-  // Inkeys.associate = (models) => {
-  //   Inkeys.belongsTo(models.medias, {
-  //     foreignKey: {
-  //       name: 'media_id',
-  //       allowNull: false
-  //     }
-  //   })
-  //   Inkeys.belongsTo(models.keywords, {
-  //     foreignKey: {
-  //       name: 'keyword_id',
-  //       allowNull: false
-  //     }
-  //   })
-  // }
   return Inkeys
 }
