@@ -18,6 +18,8 @@ class UploadFile extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    this.props.form.resetFields()
+
     // TODO: do something with -> this.state.file
     console.log('handle uploading-', this.state.file);
   }
@@ -51,18 +53,14 @@ class UploadFile extends React.Component {
 
 
   handleChange = (value) => {
-    console.log(`selected ${value}`);
   }
   handleonChange = (value) => {
-    console.log(`selected ${value}`);
   }
 
   handleonBlur = () => {
-    console.log('blur');
   }
 
   handleonFocus = () => {
-    console.log('focus');
   }
 
   handleonSearch = (val) => {
@@ -226,20 +224,6 @@ class UploadFile extends React.Component {
               <Button block type="primary" htmlType="submit">Submit</Button>
             </Col>
           </Form>
-        </Row>
-        <Row type='flex' justify='center' >
-          <Col span={12} style={{ margin: '5vh' }}>
-            <br />
-            <Form.Item label="Reason">
-              <TextArea rows={2} />
-            </Form.Item>
-            <Form.Item>
-              <Row>
-                <Col span={3}><Button type="primary">Approve</Button></Col>
-                <Col ><Button type="danger">Reject</Button></Col>
-              </Row>
-            </Form.Item>
-          </Col>
         </Row>
       </Row>
     )

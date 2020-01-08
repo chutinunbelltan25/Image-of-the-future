@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, Row, Col } from 'antd'
+import { Row, Col } from 'antd'
 
 import Axios from 'axios'
 import { connect } from 'react-redux'
@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 //     }))
 // }
 
-class admin extends Component {
+class Admin extends Component {
 
   render() {
 
@@ -22,16 +22,33 @@ class admin extends Component {
       <Row type='flex' justify="right" style={{ fontSize: '28px', margin: '50px' }}>
         <Col>
           <Row>
+          <Row>
+            <Col>
+              Image waiting for verification
+            </Col>
             <Row type='flex' justify="space-around" style={{ margin: '1vh' }}>
               {this.props.user.picInProgress.map(medias => (
-                <Col span={5} style={{ margin: '1vh' }}><img style={{ width: '80vh', height: '50vh' }}  src={`${medias.media_url}`} />
-                <h5>Image Name :{medias.media_name} </h5>
-                <h5>Description : {medias.text} </h5>
-                </Col>
+                <Col span={5} style={{ margin: '1vh' }}><img style={{ width: '40vh', height: '30vh' }} src={`${medias.media_url} `} /></Col>
               ))}
-              {/* <h3>Key Word : {keywords.keyword_name}</h3>
-              <h3>Category : {Categorys.Category_name}</h3> */}
+              {this.props.cate.cate_List.map(categorys => (
+                <Col>{categorys.category_name}</Col>
+              ))}
+
+              {this.props.keyword.key_List.map(keywords => (
+                <Col>{keywords.keyword_name}</Col>
+              ))}
             </Row></Row>
+        <Col span={24}>
+          Image Reject
+        </Col>
+        {console.log("this.props.mediaReject.mediaReject", this.props.mediaReject.mediaReject)}
+        <Row type='flex' justify="space-around" style={{ margin: '1vh' }}>
+          {this.props.mediaReject.mediaReject.map(medias => (
+            <Col span={5} style={{ margin: '1vh' }}><img style={{ width: '40vh', height: '30vh' }} src={`${medias.media_url} `} />
+              </Col>
+          ))}
+            </Row>
+            </Row>
         </Col>
       </Row>
     )

@@ -3,10 +3,28 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
 const _ = require('lodash');
 
-module.exports = (app, db) => {
+module.exports =  (app, db) => {
+  app.post('/admin_Reason/medias/:media_id', async (req, res) => {
+    console.log('this is body', req.body)
+    console.log('this is param', req.params.media_id)
+    db.medias 
+      .update({
+        status: req.body.status,
+        reason: req.body.reason,
+        approve_date: new Date(),
+      },{ where: { status: "in-progress", media_id: req.params.media_id}}
+      )
+      .then(result => {
+        res.status(200).json(result);
+      })
+      .catch(error => {
+        res.status(400).json({ message: error.message });
+      })
+  })
+  //-ข้างบนทำรวม3ตาราง
   app.get('/media_approve', async (req, res) => {
     db.medias
-      .findAll({ 
+      .findAll({
         where: { status: "approve" }
       })
       .then(result => {
@@ -16,9 +34,10 @@ module.exports = (app, db) => {
         res.status(400).json({ message: error.message });
       });
   })
-  app.get('/media_reject', async (req, res) => {
+  app.get('/admin_for_approve', async (req, res) => {
     db.medias
-      .findAll({ where: { status: "reject" }
+      .findAll({
+        where: { status: "in-progress" }
       })
       .then(result => {
         res.status(200).json(result);
@@ -27,9 +46,34 @@ module.exports = (app, db) => {
         res.status(400).json({ message: error.message });
       });
   })
-  app.get('/media_inprogress', async (req, res) => {
+  app.get('/media_approve/user/:user_id', async (req, res) => {
     db.medias
-      .findAll({ where: { status: "in-progress" }
+      .findAll({
+        where: { status: "approve", user_id: req.params.user_id }
+      })
+      .then(result => {
+        res.status(200).json(result);
+      })
+      .catch(error => {
+        res.status(400).json({ message: error.message });
+      });
+  })
+  app.get('/media_reject/user/:user_id', async (req, res) => {
+    db.medias
+      .findAll({
+        where: { status: "reject", user_id: req.params.user_id }
+      })
+      .then(result => {
+        res.status(200).json(result);
+      })
+      .catch(error => {
+        res.status(400).json({ message: error.message });
+      });
+  })
+  app.get('/media_inprogress/user/:user_id', async (req, res) => {
+    db.medias
+      .findAll({
+        where: { status: "in-progress", user_id: req.params.user_id }
       })
       .then(result => {
         res.status(200).json(result);

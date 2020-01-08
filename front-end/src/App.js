@@ -3,27 +3,42 @@ import { Layout } from 'antd';
 import { Switch, Route } from 'react-router-dom'
 import { Redirect } from 'react-router'
 import './App.css';
-import Home from './pages/Home'
-// import Signup from './pages/Signup'
-import Register from './pages/Register'
-import User from './pages/User'
-import Upload from './pages/upload'
 import NavbarMenu from './component/NavbarMenu'
 import DetailPicture from './pages/detailPicture'
+import PrivateRoute from './component/route/PrivateRoute'
+
 //redux
 import { connect } from 'react-redux'
-import { setPicInProgess, setPicInProgess_cate, setPicInProgess_key,setPicApprove_media,setPicReject_media } from './redux/user/action'
+import { setPicInProgess, setPicInProgess_cate, setPicInProgess_key,setPicApprove_media,setPicReject_media,setHome_media,admin_approve_media,admin_reason_media } from './redux/user/action'
 import Axios from 'axios'
+import JwtDecode from 'jwt-decode';
 
 class App extends React.Component {
+  state = {
+    // role: "guest"
+  }
 
-
-  handlePhotoNew() {
-    Axios.get(`http://localhost:8080/media_inprogress`).then(res => {
+  handlePhotoNew(id) {
+    Axios.get(`http://localhost:8080/media_inprogress/user/${id}`).then(res => {
       this.props.setPicInProgess(res)
     });
   }
-
+  handlePhotoApprove(id) {
+    Axios.get(`http://localhost:8080/media_approve/user/${id}`).then(res => {
+      this.props.setPicApprove_media(res)
+    });
+  }
+  handlePhotoReject(id) {
+    Axios.get(`http://localhost:8080/media_reject/user/${id}`).then(res => {
+      this.props.setPicReject_media(res)
+    });
+  }
+//home
+  handlePhotoMedia() {
+    Axios.get(`http://localhost:8080/media_approve`).then(res => {
+    this.props.setHome_media(res)
+    });
+  }
   handlePhotoCate() {
     Axios.get(`http://localhost:8080/category`).then(res => {
       this.props.setPicInProgess_cate(res)
@@ -34,29 +49,36 @@ class App extends React.Component {
       this.props.setPicInProgess_key(res)
     });
   }
-  handlePhotoApprove() {
-    Axios.get(`http://localhost:8080/media_approve`).then(res => {
-      this.props.setPicApprove_media(res)
+  handleAdminApprove() {
+    // console.log(res)
+    Axios.get(`http://localhost:8080/admin_for_approve`).then(res => {
+      console.log(res)
+      this.props.admin_approve_media(res)
     });
   }
-  handlePhotoReject() {
-    Axios.get(`http://localhost:8080/media_reject`).then(res => {
-      this.props.setPicReject_media(res)
+  handleAdminReason() {
+    Axios.post(`http://localhost:8080/admin_Reason/medias/:media_id`).then(res => {
+      console.log(res)
+      this.props.admin_reason_media(res)
     });
   }
-
 
   componentDidMount() {
-    this.handlePhotoNew()
+    let token = localStorage.getItem('ACCESS_TOKEN')
+    let user = JwtDecode(token)
+    this.handlePhotoNew(user.id)
     this.handlePhotoCate()
     this.handlePhotoKey()
-    this.handlePhotoApprove()
-    this.handlePhotoReject()
+    this.handlePhotoApprove(user.id)
+    this.handlePhotoReject(user.id)
+    this.handlePhotoMedia()
+    this.handleAdminApprove()
+    this.handleAdminReason()
   }
 
   render() {
-
-
+    let token = localStorage.getItem('ACCESS_TOKEN')
+    let user = JwtDecode(token)
 
     const { Header, Content } = Layout;
     return (
@@ -65,15 +87,7 @@ class App extends React.Component {
           <Header style={{ height: '10vh', backgroundColor: 'black' }}><NavbarMenu /></Header>
           <Content style={{ height: "100vh", backgroundColor: 'white' }}>
             <Switch>
-              {localStorage.getItem("ACCESS_TOKEN") ? <Route exact path="/upload" component={Upload} /> :
-                null} {/*component={()=>  ตัวส่ง elementหลัง =>}*/}
-              <Route exact path="/register" component={Register} />
-              {localStorage.getItem("ACCESS_TOKEN") ? <Route exact path="/User" component={User} /> :
-                null}
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/detailPicture" component={DetailPicture} />
-              {/* <Redirect to='/search' /> */}
-              {/* ถ้าพิมที่ไม่ถูกก็จะไปขึ้นหน้านี้ */}
+              <PrivateRoute role={user.role} />
             </Switch>
           </Content>
 
@@ -85,7 +99,10 @@ class App extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-  user: state.user
+  //ถามวัต
+  user: state.user,
+  adminApproveMedia: state.adminApproveMedia,
+  adminReasonMedia: state.adminReasonMedia
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -94,6 +111,9 @@ const mapDispatchToProps = (dispatch) => ({
   setPicInProgess_key: (data) => dispatch(setPicInProgess_key(data)),
   setPicApprove_media: (data) => dispatch(setPicApprove_media(data)),
   setPicReject_media: (data) => dispatch(setPicReject_media(data)),
+  setHome_media: (data) => dispatch(setHome_media(data)),
+  admin_approve_media: (data) => dispatch(admin_approve_media(data)),
+  admin_reason_media: (data) => dispatch(admin_reason_media(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

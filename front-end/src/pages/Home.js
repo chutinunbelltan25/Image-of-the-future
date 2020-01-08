@@ -1,16 +1,66 @@
 import React, { Component } from 'react'
-import { Row, Col, Select, Button } from 'antd'
+import { Row, Col, Select, Button,Modal, Form, InputNumber , Icon } from 'antd'
+import Axios from 'axios'
 import './Home.css'
 import { connect } from 'react-redux'
 import pic1 from '../image/2.JPG'
 const { Option } = Select;
 class Home extends Component {
   state = {
-    categorys: []
+    categorys: [],
+    id_media: '',
+    Name_media: '', 
+    Des_media: '',
+    Pic_media: '',
+    visible: false
   }
   handleChange = (value) => {
     console.log(`selected ${value}`);
   }
+  showModal = (media_name, text, media_id,media_url) => {
+    this.setState({
+      visible: true,
+      Pic_media: media_url,
+      Name_media: media_name,
+      Des_media: text,
+      id_media: media_id
+    });
+  };
+  // handleonSearch = (val) => { }
+
+  handleOk = e => {
+    this.handleSubmit(e)
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleSubmit = e => {
+    const mediaId = this.state.id_media
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        Axios.post(`/admin_Reason/medias/${mediaId}`, {
+          number_of_download: values.upload,
+        })
+        .then(result => {
+
+          console.log(result)
+        })
+        this.props.form.resetFields()
+        window.location.reload(true)
+        // this.forceUpdate(() => console.log('FOrce updated'))
+      }
+    });
+  };
+
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
 
   // rendercategory = () => {
   //     const categorySelect = [];
@@ -20,6 +70,8 @@ class Home extends Component {
   //     }
 
   render() {
+    const { getFieldDecorator } = this.props.form;
+    console.log('test re render count', this.props.homeMedia)
 
     return (
       <Row>
@@ -45,9 +97,12 @@ class Home extends Component {
         </Row>
         <Row>
           <Row type='flex' style={{ marginTop: '2vh', marginLeft: '2vh' }}>
-            {this.props.user.picInProgress.map(medias => (
-              <Col span={5} style={{ margin: '1vh' }}><img style={{ width: '40vh', height: '30vh' }} src={`${medias.media_url} `} /></Col>
-            ))}
+            {
+              this.props.homeMedia.homeMedia.map(medias => (
+                <Col span={5} style={{ margin: '1vh' }}><img style={{ width: '40vh', height: '30vh' }}
+                onClick={()=>this.showModal(medias.media_name, medias.text, medias.media_id, medias.media_url)}src={`${medias.media_url} `} /></Col>
+              ))
+            }
           </Row>
           <Row type='flex' style={{ marginTop: '2vh', marginLeft: '2vh' }}>
             <Col span={6} ><img src={pic1} alt="pic" style={{ width: '50vh' }} /></Col>
@@ -55,12 +110,32 @@ class Home extends Component {
             <Col span={6} ><img src={pic1} alt="pic" style={{ width: '50vh' }} /></Col>
             <Col span={6} ><img src={pic1} alt="pic" style={{ width: '50vh' }} /></Col>
           </Row>
-          <Row type='flex' style={{ marginTop: '2vh', marginLeft: '2vh' }}>
-            <Col span={6} ><img src={pic1} alt="pic" style={{ width: '50vh' }} /></Col>
-            <Col span={6} ><img src={pic1} alt="pic" style={{ width: '50vh' }} /></Col>
-            <Col span={6} ><img src={pic1} alt="pic" style={{ width: '50vh' }} /></Col>
-            <Col span={6} ><img src={pic1} alt="pic" style={{ width: '50vh' }} /></Col>
-          </Row>
+          <Modal
+          title="Admin Approve"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <p>Name Image: {this.state.Name_media}</p>
+          <p>Description: {this.state.Des_media}</p>
+          <Form style={{ width: '100%' }}>
+            <Col span={24} >
+            <Form.Item label="Upload" >
+          {getFieldDecorator('upload', {
+            rules: [
+              {
+                required: true,
+                message: 'Please plus 1 number'
+              }
+            ]
+          })(
+            <InputNumber min={1} max={100} defaultValue={1}/>
+          )}
+        </Form.Item>
+            </Col>
+            
+          </Form>
+        </Modal>
 
         </Row>
       </Row>
@@ -71,6 +146,8 @@ class Home extends Component {
 const mapStateToProps = (state) => ({
   user: state.user,
   cate: state.cate,
-  keyword: state.keyword
+  keyword: state.keyword,
+  homeMedia: state.homeMedia
 })
-export default connect(mapStateToProps)(Home)
+const HomeForm = Form.create({ name: 'home' })(Home)
+export default connect(mapStateToProps)(HomeForm)

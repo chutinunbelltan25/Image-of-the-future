@@ -13,17 +13,20 @@ class PrivateRoute extends Component {
   }
 
   componentDidMount() {
+
     let role = this.props.role
+    console.log(role)
     if (role) {
       this.setState({
         allowedRoutes: rolesConfig[role].routes
       })
     } else {
-      this.props.history.push('/home');
+      this.props.history.push('/navbar');
     }
   }
 
   render() {
+    console.log(this.state.allowedRoutes)
     return (
       <>
         {this.state.allowedRoutes.map(route =>
@@ -33,7 +36,7 @@ class PrivateRoute extends Component {
             key={route.url}
           />
         )}
-        {this.props.role == "guest" ? <Redirect to='/home' /> : null}
+        {this.props.role == "user" || this.props.role == "admin" ? null : <Redirect to='/navbar' />  }
       </>
     )
   }

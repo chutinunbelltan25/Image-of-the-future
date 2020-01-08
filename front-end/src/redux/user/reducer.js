@@ -3,12 +3,18 @@ import { categoryType } from './type'
 import { keywordType } from './type'
 import { mediaApproveType } from './type'
 import { mediaRejectType } from './type'
+import { homeMediaType } from './type'
+import { adminForApproveMediaType, adminReasonType} from './type'
 const INTIAL_STATE = {
     picInProgress : [],
     mediaApprove : [],
     mediaReject : [],
     cate_List: [],
-    key_List: []
+    key_List: [],
+    homeMedia: [],
+    adminApproveMedia: [],
+    adminReasonMedia: [],
+
 };
 
 const userReducer = (state=INTIAL_STATE, action) => {
@@ -88,5 +94,47 @@ const mediaRejectReducer = (state=INTIAL_STATE, action) => {
             return state
     }
 };
+const homeMediaReducer = (state=INTIAL_STATE, action) => {
+    switch(action.type){
 
-export {userReducer,cateReducer,keyReducer,mediaRejectReducer,mediaApproveReducer}
+        case(homeMediaType.SET_HOME_MEDIA):
+        console.log(action)
+        return {
+            ...state,
+            homeMedia : action.payload.data
+        }
+        
+        default: 
+            return state
+    }
+};
+const adminMediaReducer = (state=INTIAL_STATE, action) => {
+    switch(action.type){
+
+        case(adminForApproveMediaType.ADMIN_APPROVE_MEDIA):
+        console.log(action)
+        return {
+            ...state,
+            adminApproveMedia : action.payload.data
+        }
+        
+        default: 
+            return state
+    }
+};
+const adminRessonReducer = (state=INTIAL_STATE, action) => {
+    switch(action.type){
+
+        case(adminReasonType.ADMIN_REASON_MEDIA):
+        console.log(action)
+        return {
+            ...state,
+            adminReasonMedia : action.payload.data
+        }
+        
+        default: 
+            return state
+    }
+};
+
+export {userReducer,cateReducer,keyReducer,mediaRejectReducer,mediaApproveReducer,homeMediaReducer,adminMediaReducer,adminRessonReducer}
