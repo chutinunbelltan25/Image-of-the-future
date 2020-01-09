@@ -4,8 +4,9 @@ import { grey } from '@ant-design/colors'
 import { Button, Drawer } from 'antd'
 import logo from '../image/logo1.jpg'
 import Axios from '../config/axios.setup'
-import jwtDecode from 'jwt-decode'
-import {withRouter} from 'react-router-dom'
+import pic1 from '../image/2.JPG'
+import JwtDecode from 'jwt-decode'
+import { withRouter } from 'react-router-dom'
 import { failLoginNotification, successLoginNotification } from './notification'
 const { Text } = Typography;
 
@@ -34,6 +35,9 @@ class NavbarMenu extends Component {
       placement: e.target.value,
     });
   };
+  handleLogout = () => {
+    localStorage.removeItem('ACCESS_TOKEN')
+  }
 
   handleSubmit = (e) => {
     e.preventDefault()
@@ -43,65 +47,85 @@ class NavbarMenu extends Component {
       .then(result => {
         console.log('Login successfully', result.data)
         successLoginNotification()
-        const token = localStorage.setItem('ACCESS_TOKEN', result.data.token)
-        const user = jwtDecode(result.data.token)
+        localStorage.setItem('ACCESS_TOKEN', result.data.token)
         this.props.history.push("/home")
       })
       .catch(err => {
         console.error('Error', err)
         failLoginNotification()
       })
-      this.props.form.resetFields()
+    this.props.form.resetFields()
   }
   render() {
     const { getFieldDecorator } = this.props.form;
+    let token = localStorage.getItem('ACCESS_TOKEN')
+    let user = {
+      role: 'guest'
+    }
+    if (token) {
+      user = JwtDecode(token)
+    }
+
     return (
       <Row >
         <Row style={{ display: 'flex', justifyItems: 'center' }}>
-          <Col span={6} style={{ margin: '3.5vh' }}>
+          <Col span={6} style={{ margin: '5vh' }}>
             <a href="/home"><img src={logo} alt='logo' style={{ width: '40vh' }} /></a>
           </Col>
-          <Col span={6}>
+          <Col span={10}>
+            
           </Col>
-          <Col span={12} style={{ marginTop: '2vh' }}>
+          <Col span={8} style={{ marginTop: '2vh' }}>
             <Menu
               mode="horizontal"
-              style={{ backgroundColor: grey[9] }}
+              style={{ backgroundColor: grey[9], display: "flex", justifyContent: "space-around" }}
             >
               <Menu.Item key="1" >
-              <a href="/home">
-                  <h5 style={{ color: 'white', fontSize: '20px' }}>
-                  <Icon type="appstore" />
+                <a href="/home">
+                  <h5 style={{ color: 'white', fontSize: '15px' }}>
+                    <Icon type="appstore" />
                     <span>Home</span></h5></a>
               </Menu.Item>
-              <Menu.Item key="2" >
-              <a onClick={this.showDrawer}>
-                  <h5 style={{ color: 'white', fontSize: '20px' }}>
-                    <Icon type="lock" />
-                    <span>Sign In</span></h5></a>
-              </Menu.Item>
-              <Menu.Item key="3">
-                <a href="/register">
-                  <h5 style={{ color: 'white', fontSize: '20px' }}>
-                    <Icon type="desktop" />
-                    <span>Register</span></h5></a>
-              </Menu.Item>
-
-              <Menu.Item key="4">
-                <a href="/user">
-                  <h5 style={{ color: 'white', fontSize: '20px' }}>
-                  <Icon type="user" />
-                    <span>User</span></h5></a>
-              </Menu.Item>
-              <Menu.Item key="5">
-                <a href="/upload">
-                  <h5 style={{ color: 'white', fontSize: '20px' }}>
-                  <Icon type="upload" />
-                    <span>Upload</span></h5></a>
-              </Menu.Item>
+              {user.role == "user" || user.role == "admin" ?
+                <>
+                  <Menu.Item key="2">
+                    <a href="/user">
+                      <h5 style={{ color: 'white', fontSize: '15px' }}>
+                        <Icon type="user" />
+                        <span>User</span></h5></a>
+                  </Menu.Item>
+                  <Menu.Item key="3">
+                    <a href="/upload">
+                      <h5 style={{ color: 'white', fontSize: '15px' }}>
+                        <Icon type="upload" />
+                        <span>Upload</span></h5></a>
+                  </Menu.Item>
+                  <Menu.Item key="4">
+                    <a href="/navber" onClick={this.handleLogout} >
+                      <h5 style={{ color: 'white', fontSize: '15px' }}>
+                        <Icon type="logout" />
+                        <span>Logout</span></h5></a>
+                  </Menu.Item>
+                </>
+                : <>
+                  <Menu.Item key="2" >
+                    <a onClick={this.showDrawer}>
+                      <h5 style={{ color: 'white', fontSize: '15px' }}>
+                        <Icon type="lock" />
+                        <span>Sign In</span></h5></a>
+                  </Menu.Item>
+                  <Menu.Item key="3">
+                    <a href="/register">
+                      <h5 style={{ color: 'white', fontSize: '15px' }}>
+                        <Icon type="desktop" />
+                        <span>Register</span></h5></a>
+                  </Menu.Item>
+                </>
+              }
             </Menu>
           </Col>
         </Row>
+
         <Drawer
           title="Login"
           placement="right"
@@ -109,7 +133,6 @@ class NavbarMenu extends Component {
           onClose={this.onClose}
           visible={this.state.visible}
           getContainer={false}
-
         >
           <Col span='24'>
             <Form onSubmit={this.handleSubmit} className="login-form">
@@ -145,9 +168,9 @@ class NavbarMenu extends Component {
                   </Col>
                   <Button htmlType='submit' block type="primary" className="login-form-button">
                     Log in
-                  </Button>
-
-                </Form.Item></Col>
+                            </Button>
+                </Form.Item>
+              </Col>
             </Form>
           </Col>
         </Drawer>
@@ -156,6 +179,6 @@ class NavbarMenu extends Component {
   }
 }
 
- NavbarMenu = Form.create({ name: 'normal_login' })(NavbarMenu);
- export default withRouter(NavbarMenu)
+NavbarMenu = Form.create({ name: 'normal_login' })(NavbarMenu);
+export default withRouter(NavbarMenu)
 

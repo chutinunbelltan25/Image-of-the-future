@@ -50,27 +50,29 @@ class App extends React.Component {
     });
   }
   handleAdminApprove() {
-    // console.log(res)
     Axios.get(`http://localhost:8080/admin_for_approve`).then(res => {
-      console.log(res)
       this.props.admin_approve_media(res)
     });
   }
   handleAdminReason() {
     Axios.post(`http://localhost:8080/admin_Reason/medias/:media_id`).then(res => {
-      console.log(res)
       this.props.admin_reason_media(res)
     });
   }
 
   componentDidMount() {
     let token = localStorage.getItem('ACCESS_TOKEN')
-    let user = JwtDecode(token)
-    this.handlePhotoNew(user.id)
+    let user
+    if(token) {
+     user = JwtDecode(token)
+     this.handlePhotoNew(user.id)
+     this.handlePhotoApprove(user.id)
+     this.handlePhotoReject(user.id)
+    }
+    
+    
     this.handlePhotoCate()
     this.handlePhotoKey()
-    this.handlePhotoApprove(user.id)
-    this.handlePhotoReject(user.id)
     this.handlePhotoMedia()
     this.handleAdminApprove()
     this.handleAdminReason()
@@ -78,16 +80,19 @@ class App extends React.Component {
 
   render() {
     let token = localStorage.getItem('ACCESS_TOKEN')
-    let user = JwtDecode(token)
-
+    let role = "guest"
+    if(token) {
+      let user = JwtDecode(token)
+      role = user.role
+    }
     const { Header, Content } = Layout;
     return (
       <div className="App">
         <Layout>
-          <Header style={{ height: '10vh', backgroundColor: 'black' }}><NavbarMenu /></Header>
+          <Header style={{ height: '10.5vh', backgroundColor: 'black' }}><NavbarMenu /></Header>
           <Content style={{ height: "100vh", backgroundColor: 'white' }}>
             <Switch>
-              <PrivateRoute role={user.role} />
+              <PrivateRoute role={role} />
             </Switch>
           </Content>
 

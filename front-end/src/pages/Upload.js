@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Col, Row, Select, Input, Form, Icon, Upload } from 'antd'
 import Axios from '../config/axios.setup'
-import jwtDecode from 'jwt-decode'
+import JwtDecode from 'jwt-decode'
 import { connect } from 'react-redux';
 
 const { Option } = Select;
@@ -19,9 +19,6 @@ class UploadFile extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.resetFields()
-
-    // TODO: do something with -> this.state.file
-    console.log('handle uploading-', this.state.file);
   }
 
   handleImageChange(e) {
@@ -39,9 +36,6 @@ class UploadFile extends React.Component {
 
     reader.readAsDataURL(file)
   }
-
-
-
   // renderModalItems = () => {
   //   const children = [];
   //   this.state.keywords.map(keyword => {
@@ -49,9 +43,6 @@ class UploadFile extends React.Component {
   //   })
   //   return
   // }
-
-
-
   handleChange = (value) => {
   }
   handleonChange = (value) => {
@@ -64,7 +55,6 @@ class UploadFile extends React.Component {
   }
 
   handleonSearch = (val) => {
-    console.log('search', val);
   }
 
   uploadButton(loading) {
@@ -77,48 +67,46 @@ class UploadFile extends React.Component {
 
   submitForm = (e) => {
 
-      e.preventDefault();
-      const user = jwtDecode(localStorage.getItem('ACCESS_TOKEN'))
-      console.log(user)
+    e.preventDefault();
+    let token = localStorage.getItem('ACCESS_TOKEN')
+    let user
+    if (token) {
+      user = JwtDecode(token)
+    }
+    this.props.form.validateFieldsAndScroll((err, value) => {
+      if (!err) {
+        if (user) {
+          let data = new FormData();
+          data.append('photos', this.state.file);
+          data.append('media_name', value.ImageName)
+          data.append('text', value.Description)
+          data.append('status', "in-progress")
+          data.append('reason', '')
+          data.append('approve_date', "01-01-2020")
+          data.append('number_of_download', "0")
+          data.append('category_name', value.category)
+          data.append('keyword_name', value.keyWord)
 
-      this.props.form.validateFieldsAndScroll((err, value) => {
-        if (!err) {
-          if (user) {
-            console.log('GOOGLE')
-            let data = new FormData();
-            data.append('photos', this.state.file);
-            data.append('media_name',value.ImageName)
-            data.append('text',value.Description)
-            data.append('status',"in-progress")
-            data.append('reason','')
-            data.append('approve_date',"01-01-2020")
-            data.append('number_of_download',"0")
-            data.append('category_name',value.category)
-            data.append('keyword_name',value.keyWord)
-            
-            Axios.post('/create-uploadPic', data, {
-              headers: { 'content-type': 'multipart/form-data' }
+          Axios.post('/create-uploadPic', data, {
+            headers: { 'content-type': 'multipart/form-data' }
+          })
+            .then(result => {
             })
-              .then(result => {
-                console.log(result)
-              })
-              this.props.form.resetFields()
-          }
-        }
-        else {
           this.props.form.resetFields()
-          Axios.put('/upload-media/:media_id', {
-            status: value.status,
-            reason: value.reason,
-            approve_date: new Date(),
-            number_of_download: "0"
-          }
-          )
         }
-      })
-    } 
-
-  
+      }
+      else {
+        this.props.form.resetFields()
+        Axios.put('/upload-media/:media_id', {
+          status: value.status,
+          reason: value.reason,
+          approve_date: new Date(),
+          number_of_download: "0"
+        }
+        )
+      }
+    })
+  }
 
   // componentDidMount = async () => {
   //   const keywords = (await Axios.get('/keywords')).data
@@ -229,10 +217,10 @@ class UploadFile extends React.Component {
     )
   }
 }
-const mapStateToProps =(state) => ({
-  user : state.user
+const mapStateToProps = (state) => ({
+  user: state.user
 })
 
 const UploadFileForm = Form.create({ name: 'upload' })(UploadFile);
 
-export default connect (mapStateToProps,null)(UploadFileForm)
+export default connect(mapStateToProps, null)(UploadFileForm)

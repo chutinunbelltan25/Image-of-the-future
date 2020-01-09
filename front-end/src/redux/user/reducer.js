@@ -19,24 +19,18 @@ const INTIAL_STATE = {
 
 const userReducer = (state=INTIAL_STATE, action) => {
     switch(action.type){
-
         case(userType.SET_PIC_INPROGRESS):
-        console.log(action)
         return {
             ...state,
             picInProgress : action.payload.data
         }
-        
-        
         default: 
             return state
     }
 };
 const cateReducer = (state=INTIAL_STATE, action) => {
     switch(action.type){
-
         case(categoryType.SET_INPROGRESS_CATE):
-        console.log(action)
         return {
             ...state,
             cate_List : action.payload.data
@@ -49,15 +43,11 @@ const cateReducer = (state=INTIAL_STATE, action) => {
 };
 const keyReducer = (state=INTIAL_STATE, action) => {
     switch(action.type){
-
         case(keywordType.SET_INPROGRESS_KEY):
-        console.log(action)
         return {
             ...state,
             key_List : action.payload.data
         }
-        
-        
         default: 
             return state
     }
@@ -65,15 +55,11 @@ const keyReducer = (state=INTIAL_STATE, action) => {
 
 const mediaApproveReducer = (state=INTIAL_STATE, action) => {
     switch(action.type){
-
         case(mediaApproveType.SET_APPROVE_MEDIA):
-        console.log(action)
         return {
             ...state,
             mediaApprove : action.payload.data
         }
-        
-        
         default: 
             return state
     }
@@ -81,29 +67,22 @@ const mediaApproveReducer = (state=INTIAL_STATE, action) => {
 
 const mediaRejectReducer = (state=INTIAL_STATE, action) => {
     switch(action.type){
-
         case(mediaRejectType.SET_REJECT_MEDIA):
-        console.log(action)
         return {
             ...state,
             mediaReject : action.payload.data
         }
-        
-        
         default: 
             return state
     }
 };
 const homeMediaReducer = (state=INTIAL_STATE, action) => {
     switch(action.type){
-
         case(homeMediaType.SET_HOME_MEDIA):
-        console.log(action)
         return {
             ...state,
             homeMedia : action.payload.data
         }
-        
         default: 
             return state
     }
@@ -112,7 +91,6 @@ const adminMediaReducer = (state=INTIAL_STATE, action) => {
     switch(action.type){
 
         case(adminForApproveMediaType.ADMIN_APPROVE_MEDIA):
-        console.log(action)
         return {
             ...state,
             adminApproveMedia : action.payload.data
@@ -126,12 +104,10 @@ const adminRessonReducer = (state=INTIAL_STATE, action) => {
     switch(action.type){
 
         case(adminReasonType.ADMIN_REASON_MEDIA):
-        console.log(action)
         return {
             ...state,
             adminReasonMedia : action.payload.data
         }
-        
         default: 
             return state
     }

@@ -3,7 +3,6 @@ import { Row, Col, Select, Button,Modal, Form, InputNumber , Icon } from 'antd'
 import Axios from 'axios'
 import './Home.css'
 import { connect } from 'react-redux'
-import pic1 from '../image/2.JPG'
 const { Option } = Select;
 class Home extends Component {
   state = {
@@ -15,7 +14,6 @@ class Home extends Component {
     visible: false
   }
   handleChange = (value) => {
-    console.log(`selected ${value}`);
   }
   showModal = (media_name, text, media_id,media_url) => {
     this.setState({
@@ -30,7 +28,6 @@ class Home extends Component {
 
   handleOk = e => {
     this.handleSubmit(e)
-    console.log(e);
     this.setState({
       visible: false,
     });
@@ -45,8 +42,6 @@ class Home extends Component {
           number_of_download: values.upload,
         })
         .then(result => {
-
-          console.log(result)
         })
         this.props.form.resetFields()
         window.location.reload(true)
@@ -56,12 +51,10 @@ class Home extends Component {
   };
 
   handleCancel = e => {
-    console.log(e);
     this.setState({
       visible: false,
     });
   };
-
   // rendercategory = () => {
   //     const categorySelect = [];
   //     this.state.categorys.filter(category => (
@@ -75,7 +68,7 @@ class Home extends Component {
 
     return (
       <Row>
-        <Row type='flex' style={{ marginTop: '6vh', marginLeft: '2vh' }}>
+        {/* <Row type='flex' style={{ marginTop: '8vh', marginLeft: '2vh' }}>
           <Col>
             <Select defaultValue="Category" style={{ width: 120 }} onChange={this.handleChange}>
               <Option value="Food and Drink">Travel</Option>
@@ -94,21 +87,15 @@ class Home extends Component {
           <Col><Button type="primary" icon="search">
             Search
                     </Button></Col>
-        </Row>
+        </Row> */}
         <Row>
-          <Row type='flex' style={{ marginTop: '2vh', marginLeft: '2vh' }}>
+          <Row type='flex' justify="space-between" style={{ marginTop: '8vh', marginLeft: '1vh' }}>
             {
               this.props.homeMedia.homeMedia.map(medias => (
-                <Col span={5} style={{ margin: '1vh' }}><img style={{ width: '40vh', height: '30vh' }}
+                <Col span={6} ><img style={{ width: '50vh',padding: '2vh' }}
                 onClick={()=>this.showModal(medias.media_name, medias.text, medias.media_id, medias.media_url)}src={`${medias.media_url} `} /></Col>
               ))
             }
-          </Row>
-          <Row type='flex' style={{ marginTop: '2vh', marginLeft: '2vh' }}>
-            <Col span={6} ><img src={pic1} alt="pic" style={{ width: '50vh' }} /></Col>
-            <Col span={6} ><img src={pic1} alt="pic" style={{ width: '50vh' }} /></Col>
-            <Col span={6} ><img src={pic1} alt="pic" style={{ width: '50vh' }} /></Col>
-            <Col span={6} ><img src={pic1} alt="pic" style={{ width: '50vh' }} /></Col>
           </Row>
           <Modal
           title="Admin Approve"
@@ -133,13 +120,10 @@ class Home extends Component {
           )}
         </Form.Item>
             </Col>
-            
           </Form>
         </Modal>
-
         </Row>
       </Row>
-
     )
   }
 }

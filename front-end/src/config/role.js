@@ -22,10 +22,6 @@ const components = {
     component: 'UploadFile',
     url: '/upload'
   },
-  admin: {
-    component: 'Admin',
-    url: '/admin'
-  },
   detailPicture: {
     component: 'DetailPicture',
     url: '/detailPicture'
@@ -43,7 +39,7 @@ export default {
       components.uploadFile,
       components.user,
       components.detailPicture
-    ]
+    ] 
   },
   guest: {
     routes: [

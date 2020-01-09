@@ -7,7 +7,7 @@ const UNPROTECTED_PATHS = [
   "registerUser",
   "create-uploadPic",
   "upload-media/:media_id",
-  "keywords"
+  "keywords",
 ]
 
 const isUnprotectedPath = (url) => {
