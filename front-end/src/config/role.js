@@ -29,7 +29,6 @@ const components = {
 };
 
 export default {
-  //role name as a key.
   admin: {
     routes: [...Object.values(components)],
   },

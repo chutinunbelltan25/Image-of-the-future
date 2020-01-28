@@ -5,6 +5,4 @@ import UserProfile from '../../pages/User'
 import UploadFile from '../../pages/upload'
 import DetailPicture from '../../pages/detailPicture'
 
-
-
 export { NavbarMenu, Register, UserProfile as User, UploadFile, Home, DetailPicture }

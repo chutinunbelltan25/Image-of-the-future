@@ -3,16 +3,26 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
 const _ = require('lodash');
 
-module.exports =  (app, db) => {
+module.exports = (app, db) => {
+  app.get('/home/category')
+  db.medias
+    .findAll({
+      where: { status: "approve" },
+      include: [
+        {
+          model: db.categorys,
+          as: "InCate",
+          through: { attributes: ["category_name"] }
+        }
+      ]
+    })
   app.post('/admin_Reason/medias/:media_id', async (req, res) => {
-    console.log('this is body', req.body)
-    console.log('this is param', req.params.media_id)
-    db.medias 
+    db.medias
       .update({
         status: req.body.status,
         reason: req.body.reason,
         approve_date: new Date(),
-      },{ where: { status: "in-progress", media_id: req.params.media_id}}
+      }, { where: { status: "in-progress", media_id: req.params.media_id } }
       )
       .then(result => {
         res.status(200).json(result);
@@ -21,7 +31,6 @@ module.exports =  (app, db) => {
         res.status(400).json({ message: error.message });
       })
   })
-  //-ข้างบนทำรวม3ตาราง
   app.get('/media_approve', async (req, res) => {
     db.medias
       .findAll({
@@ -49,6 +58,7 @@ module.exports =  (app, db) => {
   app.get('/media_approve/user/:user_id', async (req, res) => {
     db.medias
       .findAll({
+
         where: { status: "approve", user_id: req.params.user_id }
       })
       .then(result => {
@@ -93,12 +103,9 @@ module.exports =  (app, db) => {
           message: "No file uploaded"
         });
       } else {
-        //Use the name of the input field (i.e. "photo") to retrieve the uploaded file
         let photo = req.files.photos;
         let photoName = new Date().getTime() + ".jpeg";
-        //Use the mv() method to place the file in upload directory (i.e. "uploads")
         photo.mv("./uploads/" + photoName);
-        //send response
         url = `http://localhost:8080/${photoName}`
         db.medias.create({
           user_id: req.user.user_id,
@@ -131,7 +138,6 @@ module.exports =  (app, db) => {
             res.status(201).send(mediaResult)
           })
           .catch(err => {
-            console.log(err.message)
             res.status(400).send({ message: err.message })
           })
       }
@@ -139,7 +145,6 @@ module.exports =  (app, db) => {
   )
   app.post("/upload-photo",
     function (req, res) {
-      // console.log(mv)
       db.medias.create
       try {
         if (!req.files) {
@@ -148,12 +153,10 @@ module.exports =  (app, db) => {
             message: "No file uploaded"
           });
         } else {
-          //Use the name of the input field (i.e. "photo") to retrieve the uploaded file
+
           let photo = req.files.photos;
           let photoName = new Date().getTime() + ".jpeg";
-          //Use the mv() method to place the file in upload directory (i.e. "uploads")
           photo.mv("./uploads/" + photoName);
-          //send response
           res.send({
             status: true,
             message: "File is uploaded",
@@ -165,7 +168,6 @@ module.exports =  (app, db) => {
           });
         }
       } catch (err) {
-        console.log(err);
         res.status(500).send(err);
       }
     });

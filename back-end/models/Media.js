@@ -18,7 +18,7 @@ module.exports = (sequelize, DataType) => {
         },
         text: {
             type: DataType.STRING(1000),
-            allowNull: false,
+            allowNull: false,  
         },
         status: {
             type: DataType.ENUM('approve','in-progress','reject'),

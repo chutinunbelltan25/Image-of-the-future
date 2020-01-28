@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static("uploads"));
 app.use(morgan('dev'));
 require('./config/passport/passport')
-db.sequelize.sync({ alter: false }).then(() => {
+db.sequelize.sync({ force: true}).then(() => {
     userService(app, db);
     mediaService(app, db);
     keywordService(app, db);

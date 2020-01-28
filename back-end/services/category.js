@@ -4,15 +4,17 @@ const Op = Sequelize.Op;
 
 module.exports = (app, db) => {
 
-	app.get('/category', async (req, res) => {
-        db.categorys
-		.findAll({
-        })
-        .then(result => {
-          res.status(200).json(result);
-        })
-        .catch(error => {
-          res.status(400).json({ message: error.message });
-        });
-	})
+  app.get('/category', async (req, res) => {
+    db.categorys.findAll
+      ({
+        where: { status: 'Approve' },
+        category_name: req.query.category_name
+      })
+      .then(result => {
+        res.status(200).json(result);
+      })
+      .catch(error => {
+        res.status(400).json({ message: error.message });
+      });
+  })
 }

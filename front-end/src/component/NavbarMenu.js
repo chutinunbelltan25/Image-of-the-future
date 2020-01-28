@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
-import { Menu, Icon, Col, Row, Form, Input, Typography } from 'antd'
+import { Menu, Icon, Col, Row, Form, Input, Typography, Button, Drawer } from 'antd'
 import { grey } from '@ant-design/colors'
-import { Button, Drawer } from 'antd'
 import logo from '../image/logo1.jpg'
 import Axios from '../config/axios.setup'
-import pic1 from '../image/2.JPG'
 import JwtDecode from 'jwt-decode'
 import { withRouter } from 'react-router-dom'
 import { failLoginNotification, successLoginNotification } from './notification'
 const { Text } = Typography;
-
 class NavbarMenu extends Component {
   state = {
     username: '',
@@ -45,13 +42,11 @@ class NavbarMenu extends Component {
     const password = this.state.password
     Axios.post('loginUser', { username, password })
       .then(result => {
-        console.log('Login successfully', result.data)
         successLoginNotification()
         localStorage.setItem('ACCESS_TOKEN', result.data.token)
         this.props.history.push("/home")
       })
       .catch(err => {
-        console.error('Error', err)
         failLoginNotification()
       })
     this.props.form.resetFields()
@@ -73,7 +68,6 @@ class NavbarMenu extends Component {
             <a href="/home"><img src={logo} alt='logo' style={{ width: '40vh' }} /></a>
           </Col>
           <Col span={10}>
-            
           </Col>
           <Col span={8} style={{ marginTop: '2vh' }}>
             <Menu
@@ -168,7 +162,7 @@ class NavbarMenu extends Component {
                   </Col>
                   <Button htmlType='submit' block type="primary" className="login-form-button">
                     Log in
-                            </Button>
+                  </Button>
                 </Form.Item>
               </Col>
             </Form>

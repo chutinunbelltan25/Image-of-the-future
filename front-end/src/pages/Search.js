@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Row, Col, Input } from 'antd'
 import './search.css'
-
-
 const { Search } = Input;
 export default class Searching extends Component {
     render() {
@@ -16,7 +14,6 @@ export default class Searching extends Component {
                             placeholder="Search"
                             onSearch={value => console.log(value)}
                         />
-
                     </Col>
                 </Row>
             </div >

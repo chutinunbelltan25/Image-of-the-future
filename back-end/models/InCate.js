@@ -11,23 +11,9 @@ module.exports = (sequelize, DataType) => {
     },
   },
     {
-
       freezeTableName: true,
       timestamps: false,
     })
-  // Incates.associate = (models) => {
-  //   Incates.belongsTo(models.medias, {
-  //     foreignKey: {
-  //       name: 'media_id',
-  //       allowNull: false
-  //     }
-  //   })
-  //   Incates.belongsTo(models.categorys, {
-  //     foreignKey: {
-  //       name: 'category_id',
-  //       allowNull: false
-  //     }
-  //   })
-  // }
+
   return Incates
 }

@@ -1,23 +1,15 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { Switch, Route } from 'react-router-dom'
-import { Redirect } from 'react-router'
+import { Switch } from 'react-router-dom'
 import './App.css';
 import NavbarMenu from './component/NavbarMenu'
-import DetailPicture from './pages/detailPicture'
 import PrivateRoute from './component/route/PrivateRoute'
-
-//redux
 import { connect } from 'react-redux'
 import { setPicInProgess, setPicInProgess_cate, setPicInProgess_key,setPicApprove_media,setPicReject_media,setHome_media,admin_approve_media,admin_reason_media } from './redux/user/action'
 import Axios from 'axios'
 import JwtDecode from 'jwt-decode';
 
 class App extends React.Component {
-  state = {
-    // role: "guest"
-  }
-
   handlePhotoNew(id) {
     Axios.get(`http://localhost:8080/media_inprogress/user/${id}`).then(res => {
       this.props.setPicInProgess(res)
@@ -33,7 +25,6 @@ class App extends React.Component {
       this.props.setPicReject_media(res)
     });
   }
-//home
   handlePhotoMedia() {
     Axios.get(`http://localhost:8080/media_approve`).then(res => {
     this.props.setHome_media(res)
@@ -104,7 +95,6 @@ class App extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-  //ถามวัต
   user: state.user,
   adminApproveMedia: state.adminApproveMedia,
   adminReasonMedia: state.adminReasonMedia

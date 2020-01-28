@@ -21,6 +21,7 @@ module.exports = (sequelize, DataType) => {
 
     Category.associate = (models) => {  
         Category.belongsToMany(models.medias, {
+            as: 'hello',
             foreignKey: {
                 name: 'category_id',
                 allowNull: false

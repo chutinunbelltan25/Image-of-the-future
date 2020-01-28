@@ -134,4 +134,4 @@ const mapStateToProps = (state) => ({
   homeMedia: state.homeMedia
 })
 const HomeForm = Form.create({ name: 'home' })(Home)
-export default connect(mapStateToProps)(HomeForm)
+export default connect(mapStateToProps)(HomeForm) 
