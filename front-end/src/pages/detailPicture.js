@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'antd'
-
-import Axios from 'axios'
 import { connect } from 'react-redux'
 
 class DetailPicture extends Component {
@@ -14,7 +12,7 @@ class DetailPicture extends Component {
           <Row>
             <Row type='flex' justify="space-around" style={{ margin: '1vh' }}>
               {this.props.user.picInProgress.map(medias => (
-                <Col span={11} style={{ margin: '1vh' }}><img style={{ width: '80vh', height: '50vh' }}  src={`${medias.media_url}`} />
+                <Col span={11} style={{ margin: '1vh' }}><img style={{ width: '80vh', height: '50vh' }}  src={`${medias.media_url}`} alt=""/>
                 <Col span={12} style={{ padding: '1vh' }}>
                 <h5>Image Name :{medias.media_name} </h5>
                 <h5>Description : {medias.text} </h5>

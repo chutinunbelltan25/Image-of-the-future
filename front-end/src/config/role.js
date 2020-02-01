@@ -1,9 +1,12 @@
 
-// component's config object.
 const components = {
   navbarMenu: {
     component: 'NavbarMenu',
     url: '/navbarMenu',
+  },
+  search: {
+    component: 'Search',
+    url: '/search',
   },
   register: {
     component: 'Register',
@@ -25,6 +28,10 @@ const components = {
   detailPicture: {
     component: 'DetailPicture',
     url: '/detailPicture'
+  },
+  aboutMe: {
+    component: 'AboutMe',
+    url: '/aboutMe'
   }
 };
 
@@ -37,14 +44,17 @@ export default {
       components.home,
       components.uploadFile,
       components.user,
-      components.detailPicture
+      components.detailPicture,
+      components.aboutMe
     ] 
   },
   guest: {
     routes: [
       components.home,
       components.navbarMenu,
-      components.register
+      components.register,
+      components.search,
+      components.aboutMe
     ]
   }
 }

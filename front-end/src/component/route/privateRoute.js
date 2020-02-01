@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import * as allRoutes from './index'
 import rolesConfig from '../../config/role'
 import { Route, withRouter } from 'react-router-dom';
-import { Redirect } from 'react-router-dom'
+
 
 class PrivateRoute extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class PrivateRoute extends Component {
         allowedRoutes: rolesConfig[role].routes
       })
     } else {
-      this.props.history.push('/navbar');
+      this.props.history.push('/home');
     }
   }
 
@@ -33,7 +33,6 @@ class PrivateRoute extends Component {
             key={route.url}
           />
         )}
-        {/* {this.props.role == "user" || this.props.role == "admin" ? null : <Redirect to='/navbar' />  } */}
       </>
     )
   }

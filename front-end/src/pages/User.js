@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, Dropdown, Icon, Row, Col, Modal, Form, Input, Select } from 'antd'
+import { Row, Col, Modal, Form, Input, Select } from 'antd'
 import Axios from 'axios'
 import { connect } from 'react-redux'
 import JwtDecode from "jwt-decode";
@@ -42,9 +42,8 @@ class UserProfile extends Component {
         })
         .then(result => {
         })
-        this.props.form.resetFields()
         window.location.reload(true)
-        // this.forceUpdate(() => console.log('FOrce updated'))
+        this.props.history.push("/user")
       }
     });
   };
@@ -56,11 +55,6 @@ class UserProfile extends Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const menu = (
-      <Menu >
-        <Menu.Item style={{ fontSize: '25px' }} key="1"><div >File Image JPG</div></Menu.Item>
-      </Menu>
-    );
 
     let token = localStorage.getItem('ACCESS_TOKEN')
     let user
@@ -78,10 +72,10 @@ class UserProfile extends Component {
                 Image waiting for verification
               </Col>
               <br />
-              <Row type='flex' justify="space-around" style={{ margin: '1vh' }}>
+              <Row type='flex' justify="start" style={{ margin: '1vh' }}>
                 {this.props.user.picInProgress.map(medias => (
-                  <Col span={6} style={{ margin: '1vh' }}><img style={{ width: '40vh', height: '30vh' }}
-                    src={`${medias.media_url} `} />
+                  <Col  style={{ margin: '0.5vh' }}><img style={{ width: '40vh', height: '30vh' }}
+                    src={`${medias.media_url} `} alt="" />
                   </Col>
                 ))}
               </Row>
@@ -93,7 +87,7 @@ class UserProfile extends Component {
           <br />
           <Row type='flex' justify="space-around" style={{ margin: '1vh' }}>
             {this.props.mediaReject.mediaReject.map(medias => (
-              <Col span={5} style={{ margin: '1vh' }}><img style={{ width: '40vh', height: '30vh' }} src={`${medias.media_url} `} />
+              <Col style={{ margin: '0.5vh' }}><img style={{ width: '40vh', height: '30vh' }} src={`${medias.media_url} `} alt=""/>
               </Col>
             ))}
           </Row>
@@ -103,7 +97,7 @@ class UserProfile extends Component {
           <br />
           <Row type='flex' justify="space-around" style={{ margin: '1vh' }}>
             {this.props.mediaApprove.mediaApprove.map(medias => (
-              <Col span={5} style={{ margin: '1vh' }}><img style={{ width: '40vh', height: '30vh' }} src={`${medias.media_url} `} />
+              <Col style={{ margin: '0.5vh' }}><img style={{ width: '40vh', height: '30vh' }} src={`${medias.media_url} `} alt=""/>
               </Col>
             ))}
           </Row>
@@ -118,8 +112,8 @@ class UserProfile extends Component {
             <br />
             <Row type='flex' justify="space-around" style={{ margin: '1vh' }}>
               {this.props.adminApproveMedia.adminApproveMedia.map(medias => (
-                <Col span={5} style={{ margin: '1vh' }}><img style={{ width: '40vh', height: '30vh' }}
-                  onClick={()=>this.showModal(medias.media_name, medias.text, medias.media_id)} src={`${medias.media_url} `} />
+                <Col style={{ margin: '0.5vh' }}><img style={{ width: '40vh', height: '30vh' }}
+                  onClick={()=>this.showModal(medias.media_name, medias.text, medias.media_id)} src={`${medias.media_url} `} alt=""/>
                 </Col>
               ))}
             </Row>

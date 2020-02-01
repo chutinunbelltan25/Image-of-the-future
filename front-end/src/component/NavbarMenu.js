@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Menu, Icon, Col, Row, Form, Input, Typography, Button, Drawer } from 'antd'
+import { Menu, Icon, Col, Row, Form, Input, Button, Drawer } from 'antd'
 import { grey } from '@ant-design/colors'
 import logo from '../image/logo1.jpg'
 import Axios from '../config/axios.setup'
+import { Link } from "react-router-dom";
 import JwtDecode from 'jwt-decode'
 import { withRouter } from 'react-router-dom'
 import { failLoginNotification, successLoginNotification } from './notification'
-const { Text } = Typography;
 class NavbarMenu extends Component {
   state = {
     username: '',
@@ -44,6 +44,7 @@ class NavbarMenu extends Component {
       .then(result => {
         successLoginNotification()
         localStorage.setItem('ACCESS_TOKEN', result.data.token)
+        window.location.reload(true)
         this.props.history.push("/home")
       })
       .catch(err => {
@@ -64,8 +65,8 @@ class NavbarMenu extends Component {
     return (
       <Row >
         <Row style={{ display: 'flex', justifyItems: 'center' }}>
-          <Col span={6} style={{ margin: '5vh' }}>
-            <a href="/home"><img src={logo} alt='logo' style={{ width: '40vh' }} /></a>
+          <Col span={6} style={{ margin: '3vh' }}>
+            <a href="/home"><img src={logo} alt='logo' style={{ width: '30vh' }} /></a>
           </Col>
           <Col span={10}>
           </Col>
@@ -75,51 +76,56 @@ class NavbarMenu extends Component {
               style={{ backgroundColor: grey[9], display: "flex", justifyContent: "space-around" }}
             >
               <Menu.Item key="1" >
-                <a href="/home">
+                <Link to="/home">
                   <h5 style={{ color: 'white', fontSize: '15px' }}>
                     <Icon type="appstore" />
-                    <span>Home</span></h5></a>
+                    <span>Home</span></h5></Link>
               </Menu.Item>
-              {user.role == "user" || user.role == "admin" ?
+              <Menu.Item key="9" >
+                <Link to="/aboutMe">
+                  <h5 style={{ color: 'white', fontSize: '15px' }}>
+                    <Icon type="rocket" />
+                    <span>AboutMe</span></h5></Link>
+              </Menu.Item>
+              {user.role === "user" || user.role === "admin" ?
                 <>
                   <Menu.Item key="2">
-                    <a href="/user">
+                    <Link to="/user">
                       <h5 style={{ color: 'white', fontSize: '15px' }}>
                         <Icon type="user" />
-                        <span>User</span></h5></a>
+                        <span>User</span></h5></Link>
                   </Menu.Item>
                   <Menu.Item key="3">
-                    <a href="/upload">
+                    <Link to="/upload">
                       <h5 style={{ color: 'white', fontSize: '15px' }}>
                         <Icon type="upload" />
-                        <span>Upload</span></h5></a>
+                        <span>Upload</span></h5></Link>
                   </Menu.Item>
                   <Menu.Item key="4">
-                    <a href="/navber" onClick={this.handleLogout} >
+                    <Link to="/search" onClick={this.handleLogout} >
                       <h5 style={{ color: 'white', fontSize: '15px' }}>
                         <Icon type="logout" />
-                        <span>Logout</span></h5></a>
+                        <span>Logout</span></h5></Link>
                   </Menu.Item>
                 </>
                 : <>
                   <Menu.Item key="2" >
-                    <a onClick={this.showDrawer}>
+                    <Link to onClick={this.showDrawer}>
                       <h5 style={{ color: 'white', fontSize: '15px' }}>
                         <Icon type="lock" />
-                        <span>Sign In</span></h5></a>
+                        <span>Sign In</span></h5></Link>
                   </Menu.Item>
                   <Menu.Item key="3">
-                    <a href="/register">
+                    <Link to="/register">
                       <h5 style={{ color: 'white', fontSize: '15px' }}>
                         <Icon type="desktop" />
-                        <span>Register</span></h5></a>
+                        <span>Register</span></h5></Link>
                   </Menu.Item>
                 </>
               }
             </Menu>
           </Col>
         </Row>
-
         <Drawer
           title="Login"
           placement="right"

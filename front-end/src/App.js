@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 import { Switch } from 'react-router-dom'
 import './App.css';
 import NavbarMenu from './component/NavbarMenu'
-import PrivateRoute from './component/route/PrivateRoute'
+import PrivateRoute from './component/route/privateRoute'
 import { connect } from 'react-redux'
 import { setPicInProgess, setPicInProgess_cate, setPicInProgess_key,setPicApprove_media,setPicReject_media,setHome_media,admin_approve_media,admin_reason_media } from './redux/user/action'
 import Axios from 'axios'
@@ -80,13 +80,12 @@ class App extends React.Component {
     return (
       <div className="App">
         <Layout>
-          <Header style={{ height: '10.5vh', backgroundColor: 'black' }}><NavbarMenu /></Header>
+          <Header style={{ height: '8vh', backgroundColor: 'black' }}><NavbarMenu /></Header>
           <Content style={{ height: "100vh", backgroundColor: 'white' }}>
             <Switch>
               <PrivateRoute role={role} />
             </Switch>
           </Content>
-
         </Layout>
       </div>
     );

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Button, Col, Row, Select, Input, Form, Icon, Upload } from 'antd'
+import React from 'react'
+import { Button, Col, Row, Select, Input, Form, Icon } from 'antd'
 import Axios from '../config/axios.setup'
 import JwtDecode from 'jwt-decode'
 import { connect } from 'react-redux';
@@ -92,8 +92,8 @@ class UploadFile extends React.Component {
           })
             .then(result => {
             })
-          this.props.form.resetFields()
-        }
+          window.location.reload(true);
+        }this.props.history.push("/upload")
       }
       else {
         this.props.form.resetFields()
@@ -109,7 +109,7 @@ class UploadFile extends React.Component {
   }
 
   // componentDidMount = async () => {
-  //   const keywords = (await Axios.get('/keywords')).data
+  //   const change = (await Axios.get('/keywords')).data
   //   this.setState({ keywords })
   // }
 
@@ -120,7 +120,7 @@ class UploadFile extends React.Component {
     let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
-      $imagePreview = (<img style={{ width: '60vh', height: '50vh' }} src={imagePreviewUrl} />);
+      $imagePreview = (<img style={{ width: '60vh', height: '50vh' }} src={imagePreviewUrl} alt="" />);
     } else {
       $imagePreview = (<div style={{ width: '60vh', height: '50vh', border: '3px', solid: 'black' }}>Please select an Image</div>);
     }
