@@ -65,65 +65,44 @@ class NavbarMenu extends Component {
     return (
       <Row >
         <Row style={{ display: 'flex', justifyItems: 'center' }}>
-          <Col span={6} style={{ margin: '3vh' }}>
+          <Col span={6} style={{ margin: '5vh' }}>
             <a href="/home"><img src={logo} alt='logo' style={{ width: '30vh' }} /></a>
           </Col>
           <Col span={10}>
           </Col>
-          <Col span={8} style={{ marginTop: '2vh' }}>
-            <Menu
+          <Col span={8} style={{ marginTop: '0.5vh' }}>
+            <Row
               mode="horizontal"
               style={{ backgroundColor: grey[9], display: "flex", justifyContent: "space-around" }}
             >
-              <Menu.Item key="1" >
                 <Link to="/home">
                   <h5 style={{ color: 'white', fontSize: '15px' }}>
-                    <Icon type="appstore" />
-                    <span>Home</span></h5></Link>
-              </Menu.Item>
-              <Menu.Item key="9" >
+                    Home</h5></Link>
                 <Link to="/aboutMe">
                   <h5 style={{ color: 'white', fontSize: '15px' }}>
-                    <Icon type="rocket" />
-                    <span>AboutMe</span></h5></Link>
-              </Menu.Item>
+                    AboutMe</h5></Link>
               {user.role === "user" || user.role === "admin" ?
                 <>
-                  <Menu.Item key="2">
                     <Link to="/user">
                       <h5 style={{ color: 'white', fontSize: '15px' }}>
-                        <Icon type="user" />
-                        <span>User</span></h5></Link>
-                  </Menu.Item>
-                  <Menu.Item key="3">
+                        User</h5></Link>
                     <Link to="/upload">
                       <h5 style={{ color: 'white', fontSize: '15px' }}>
-                        <Icon type="upload" />
-                        <span>Upload</span></h5></Link>
-                  </Menu.Item>
-                  <Menu.Item key="4">
+                        Upload</h5></Link>
                     <Link to="/search" onClick={this.handleLogout} >
                       <h5 style={{ color: 'white', fontSize: '15px' }}>
-                        <Icon type="logout" />
-                        <span>Logout</span></h5></Link>
-                  </Menu.Item>
+                        Logout</h5></Link>
                 </>
                 : <>
-                  <Menu.Item key="2" >
                     <Link to onClick={this.showDrawer}>
                       <h5 style={{ color: 'white', fontSize: '15px' }}>
-                        <Icon type="lock" />
-                        <span>Sign In</span></h5></Link>
-                  </Menu.Item>
-                  <Menu.Item key="3">
+                        Sign In</h5></Link>
                     <Link to="/register">
                       <h5 style={{ color: 'white', fontSize: '15px' }}>
-                        <Icon type="desktop" />
-                        <span>Register</span></h5></Link>
-                  </Menu.Item>
+                        Register</h5></Link>
                 </>
               }
-            </Menu>
+            </Row>
           </Col>
         </Row>
         <Drawer

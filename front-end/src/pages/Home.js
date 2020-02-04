@@ -30,15 +30,51 @@ class Home extends Component {
     });
   };
 
- handdleDownloadImg = (link_download) => () => {
-  let link = document.createElement('a');
-  link.href = link_download;
-  link.download = 'Download.jpg';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
- }
+//  handdleDownloadImg = (link_download) => () => {
+//   console.log(link_download)
+//   let link = document.createElement('a');
+//   link.href = link_download;
+//   link.download = 'Download.jpg';
+//   document.body.appendChild(link);
+//   link.click();
+//   document.body.removeChild(link);
+//   console.log(link_download)
+//  }
 
+ handleClick = path => () => {
+  var image = new Image();
+  image.crossOrigin = "anonymous";
+  image.src = path;
+  var fileName = image.src.split(/(\\|\/)/g).pop();
+  image.onload = function() {
+    var canvas = document.createElement("canvas");
+    canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+    canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+    canvas.getContext("2d").drawImage(this, 0, 0);
+    var blob;
+    // ... get as Data URI
+    if (image.src.indexOf(".jpg") > -1 || image.src.indexOf(".jpeg") > -1) {
+      blob = canvas.toDataURL("image/jpeg");
+    } else if (image.src.indexOf(".png") > -1) {
+      blob = canvas.toDataURL("image/png");
+    } else if (image.src.indexOf(".gif") > -1) {
+      blob = canvas.toDataURL("image/gif");
+    } else {
+      blob = canvas.toDataURL("image/png");
+    }
+
+    let dataUriOctet = blob.replace(
+      /^data:image\/[^;]+/,
+      "data:application/octet-stream"
+    );
+    let anchor = document.createElement("a");
+    anchor.setAttribute("href", dataUriOctet);
+    anchor.setAttribute("download", fileName);
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+  };
+};
 
   handleSubmit = e => {
     const mediaId = this.state.id_media
@@ -69,15 +105,6 @@ class Home extends Component {
   //     }
 
   render() {
-    // let link = document.createElement('a');
-    // link.href = '/upload/';
-    // link.download = '/upload/';
-    // document.body.appendChild(link);
-    // link.click();
-    // document.body.removeChild(link);
-
-
-
     return (
       <Row>
         {/* <Row type='flex' style={{ marginTop: '8vh', marginLeft: '2vh' }}>
@@ -112,15 +139,15 @@ class Home extends Component {
             }
           </Row>
           <Modal
-          title="Admin Approve"
+          title="Buy Image"
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
           <p>Name Image: {this.state.Name_media}</p>
           <p>Description: {this.state.Des_media}</p>
-          <img scr={`${this.state.media_url} `} alt='' /> 
-          <Button type="primary" onClick={this.handdleDownloadImg(`http://localhost:8080/uploads/1580797009628.jpeg`)}>
+          <img scr={`${this.state.Pic_media} `} alt='' style={{ width: '50vh' }}/> 
+          <Button type="primary" onClick={this.handleClick(`${this.state.Pic_media}`)}>
             Download
           </Button>
         </Modal>
