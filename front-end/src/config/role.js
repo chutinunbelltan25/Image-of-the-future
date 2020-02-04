@@ -45,7 +45,8 @@ export default {
       components.uploadFile,
       components.user,
       components.detailPicture,
-      components.aboutMe
+      components.aboutMe,
+      components.search,
     ] 
   },
   guest: {

@@ -30,6 +30,15 @@ class Home extends Component {
     });
   };
 
+ handdleDownloadImg = (link_download) => () => {
+  let link = document.createElement('a');
+  link.href = link_download;
+  link.download = 'Download.jpg';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+ }
+
 
   handleSubmit = e => {
     const mediaId = this.state.id_media
@@ -60,12 +69,12 @@ class Home extends Component {
   //     }
 
   render() {
-    let link = document.createElement('a');
-    link.href = '/upload/';
-    link.download = '/upload/';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // let link = document.createElement('a');
+    // link.href = '/upload/';
+    // link.download = '/upload/';
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
 
 
 
@@ -111,8 +120,8 @@ class Home extends Component {
           <p>Name Image: {this.state.Name_media}</p>
           <p>Description: {this.state.Des_media}</p>
           <img scr={`${this.state.media_url} `} alt='' /> 
-          <Button type="primary" >
-            <a download ={this.state.media_url} href ='http://localhost:8080/uploads/'>Download</a>
+          <Button type="primary" onClick={this.handdleDownloadImg(`http://localhost:8080/uploads/1580797009628.jpeg`)}>
+            Download
           </Button>
         </Modal>
         </Row>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Col, Input, Row, Button, Checkbox, Form } from 'antd'
 import Axios from '../config/axios.setup'
+import { FailedRegisterNotification, SuccessRegisterNotification } from "./RegisterNoti";
 const CheckboxGroup = Checkbox.Group;
 const plainOptions = ['User', 'Admin'];
 const defaultCheckedList = ['User'];
@@ -41,14 +42,14 @@ class Register extends Component {
           username: value.username,
           password: value.password,
           full_name: value.fullName,
-          birth: value.Birthday,
-          role: value.User
+          // birth: value.Birthday,
+          role: 'User'
         })
           .then(result => {
-            console.log(result)
+            SuccessRegisterNotification()
           })
           .catch(err => {
-            console.error(err)
+            FailedRegisterNotification()
           })
         this.props.form.resetFields()
       }
@@ -108,16 +109,16 @@ class Register extends Component {
                   ]
                 })(<Input />)}
               </Form.Item>
-              <Form.Item label="Birthday">
+              {/* <Form.Item label="Birthday">
                 {getFieldDecorator('Birthday', {
                   rules: [
                     {
                       required: true,
-                      message: 'MM-DD-YYYY'
+                      message: 'DD-MM-YYYY'
                     }
                   ]
                 })(<Input />)}
-              </Form.Item>
+              </Form.Item> */}
             </Row>
             <Row>
               <Col>

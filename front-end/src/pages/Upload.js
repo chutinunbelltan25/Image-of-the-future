@@ -91,6 +91,7 @@ class UploadFile extends React.Component {
             headers: { 'content-type': 'multipart/form-data' }
           })
             .then(result => {
+              console.log(result)
             })
           window.location.reload(true);
         }this.props.history.push("/upload")
