@@ -1,0 +1,11 @@
+.BG {
+    background-color: black;
+    width: '20vh';
+    height: '20vh';
+}
+
+.size {
+    color: 'white';
+    font-size: '18px';
+    margin-right: "4vh";
+}

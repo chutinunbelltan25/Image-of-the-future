@@ -80,7 +80,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Layout>
-          <Header style={{ height: '11vh', backgroundColor: 'black' }}><NavbarMenu /></Header>
+          <NavbarMenu />
           <Content style={{ height: "100vh", backgroundColor: 'white' }}>
             <Switch>
               <PrivateRoute role={role} />

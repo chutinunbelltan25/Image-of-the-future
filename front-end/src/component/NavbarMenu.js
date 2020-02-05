@@ -3,6 +3,7 @@ import { Menu, Icon, Col, Row, Form, Input, Button, Drawer } from 'antd'
 import { grey } from '@ant-design/colors'
 import logo from '../image/logo1.jpg'
 import Axios from '../config/axios.setup'
+import './Navber.css'
 import { Link } from "react-router-dom";
 import JwtDecode from 'jwt-decode'
 import { withRouter } from 'react-router-dom'
@@ -63,48 +64,42 @@ class NavbarMenu extends Component {
     }
 
     return (
-      <Row >
-        <Row style={{ display: 'flex', justifyItems: 'center' }}>
-          <Col span={6} style={{ margin: '5vh' }}>
-            <a href="/home"><img src={logo} alt='logo' style={{ width: '30vh' }} /></a>
-          </Col>
-          <Col span={10}>
-          </Col>
-          <Col span={8} style={{ marginTop: '0.5vh' }}>
-            <Row
-              mode="horizontal"
-              style={{ backgroundColor: grey[9], display: "flex", justifyContent: "space-around" }}
-            >
-                <Link to="/home">
-                  <h5 style={{ color: 'white', fontSize: '15px' }}>
-                    Home</h5></Link>
-                <Link to="/aboutMe">
-                  <h5 style={{ color: 'white', fontSize: '15px' }}>
-                    AboutMe</h5></Link>
-              {user.role === "user" || user.role === "admin" ?
-                <>
-                    <Link to="/user">
-                      <h5 style={{ color: 'white', fontSize: '15px' }}>
-                        User</h5></Link>
-                    <Link to="/upload">
-                      <h5 style={{ color: 'white', fontSize: '15px' }}>
-                        Upload</h5></Link>
-                    <Link to="/search" onClick={this.handleLogout} >
-                      <h5 style={{ color: 'white', fontSize: '15px' }}>
-                        Logout</h5></Link>
-                </>
-                : <>
-                    <Link to onClick={this.showDrawer}>
-                      <h5 style={{ color: 'white', fontSize: '15px' }}>
-                        Sign In</h5></Link>
-                    <Link to="/register">
-                      <h5 style={{ color: 'white', fontSize: '15px' }}>
-                        Register</h5></Link>
-                </>
-              }
-            </Row>
-          </Col>
-        </Row>
+      <Row className='BG' type='flex' align="middle">
+        <Col><Link to="/home"><img src={logo} alt='logo' style={{ width: '30vh' }} /></Link></Col>
+        <Col span={20}>
+          <Row type="flex" justify="end">
+            <Col><Link to="/home">
+              <h5 style={{ color: 'white', fontSize: '18px' ,marginRight: "4vh"}}>
+                Home</h5></Link>
+            </Col>
+
+            <Link to="/aboutMe">
+              <h5 style={{ color: 'white', fontSize: '18px' ,marginRight: "4vh"}}>
+                AboutMe</h5></Link>
+            {user.role === "user" || user.role === "admin" ?
+              <>
+                <Link to="/user">
+                  <h5 style={{ color: 'white', fontSize: '18px' ,marginRight: "4vh"}}>
+                    User</h5></Link>
+                <Link to="/upload">
+                  <h5 style={{ color: 'white', fontSize: '18px' ,marginRight: "4vh"}}>
+                    Upload</h5></Link>
+                <Link to="/search" onClick={this.handleLogout} >
+                  <h5 style={{ color: 'white', fontSize: '18px' ,marginRight: "4vh"}}>
+                    Logout</h5></Link>
+              </>
+              : <>
+                <Link to onClick={this.showDrawer}>
+                  <h5 style={{ color: 'white', fontSize: '18px' ,marginRight: "4vh"}}>
+                    Sign In</h5></Link>
+                <Link to="/register">
+                  <h5 style={{ color: 'white', fontSize: '18px' ,marginRight: "4vh"}}>
+                    Register</h5></Link>
+              </>
+            }
+          </Row>
+        </Col>
+
         <Drawer
           title="Login"
           placement="right"
